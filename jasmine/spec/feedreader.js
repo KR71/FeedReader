@@ -22,7 +22,7 @@ $(function() {
          * page?
          */
         it('AllFeeds is defined', function() {
-            console.log(menuI);
+
             expect(allFeeds).toBeDefined();
             expect(allFeeds.length).not.toBe(0);
         });
@@ -84,7 +84,7 @@ $(function() {
         it('menu toggles on and off', function () {
             const body = document.querySelector('body');
             const icon = document.querySelector('.menu-icon-link');
-            console.log(menuIcon);
+
             icon.click();
             expect(body.classList.contains('menu-hidden')).toBe(false);
             icon.click();
@@ -97,7 +97,10 @@ $(function() {
         /* TODO: Write a new test suite named "Initial Entries" */
     describe('Initial Entries', function () {
 
-         beforeEach
+        //DONE GIVE US THE CALLBACK ONCE DONE, AND TEST DOESNT START UNTIL THIS IS DONE
+         beforeEach(function (done) {
+             loadFeed(0,done);
+         });
 
         /* TODO: Write a test that ensures when the loadFeed
          * function is called and completes its work, there is at least
@@ -105,17 +108,46 @@ $(function() {
          * Remember, loadFeed() is asynchronous so this test will require
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
+        it('calls back with data', function () {
+            const feed = document.querySelector('.feed');
+            expect(feed.children.length > 0).toBe(true);
 
-        /* TODO: Write a new test suite named "New Feed Selection" */
-
-        /* TODO: Write a test that ensures when a new feed is loaded
-         * by the loadFeed function that the content actually changes.
-         * Remember, loadFeed() is asynchronous.
-         */
-
+        });
 
     });
+    /* TODO: Write a new test suite named "New Feed Selection" */
+    describe('New feed selection', function() {
+
+        const feed = document.querySelector('.feed');
+        const initialFeed = [];
+       // console.log(feed);
+
+        //console.log(feed);
+
+        beforeEach(function(done) {
+
+            loadFeed(0);
+            //CHANGE FEED CHILDREN INTO AN ARRAY SO CAN LOOP OVER IT
+            Array.from(feed.children).forEach(function(record) {
+
+                initialFeed.push(record.innerText);
+            });
 
 
+            //DONE CAN ONLY BE CALLED ONCE IN A BEFORE EACH
+            loadFeed(1,done);
+
+        });
+        it('loadFeed changes with entries', function() {
+
+            /* TODO: Write a test that ensures when a new feed is loaded */
+
+            //console.log(initialFeed);
+            Array.from(feed.children).forEach(function(record, index) {
+                expect(record.innerText === initialFeed[index]).toBe(false);
+            });
+        });
+
+     });
 
 }());
