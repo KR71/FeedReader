@@ -110,7 +110,7 @@ $(function() {
          */
         it('calls back with data', function () {
             const feed = document.querySelector('.feed .entry');
-            console.log(feed);
+            //console.log(feed);
             expect(feed).toBeDefined(true);
 
         });
@@ -132,7 +132,7 @@ $(function() {
 
 
                  // feed 0 done loading
-               // console.log(allFeeds[0]);
+               //console.log(allFeeds[0]);
                 prevUrl = allFeeds[0].url;
 
                 loadFeed(1, function(){
