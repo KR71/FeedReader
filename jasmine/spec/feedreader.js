@@ -109,8 +109,9 @@ $(function() {
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
         it('calls back with data', function () {
-            const feed = document.querySelector('.feed');
-            expect(feed.children.length > 0).toBe(true);
+            const feed = document.querySelector('.feed .entry');
+            console.log(feed);
+            expect(feed).toBeDefined(true);
 
         });
 
@@ -118,24 +119,34 @@ $(function() {
     /* TODO: Write a new test suite named "New Feed Selection" */
     describe('New feed selection', function() {
 
-        const feed = document.querySelector('.feed');
-        const initialFeed = [];
-       // console.log(feed);
+        let prevUrl;
+        let newUrl;
+
+        // console.log(feed);
 
         //console.log(feed);
 
         beforeEach(function(done) {
 
-            loadFeed(0);
-            //CHANGE FEED CHILDREN INTO AN ARRAY SO CAN LOOP OVER IT
-            Array.from(feed.children).forEach(function(record) {
+            loadFeed(0, function() {
 
-                initialFeed.push(record.innerText);
+
+                 // feed 0 done loading
+               // console.log(allFeeds[0]);
+                prevUrl = allFeeds[0].url;
+
+                loadFeed(1, function(){
+
+                    // feed 1 done loading
+
+                    newUrl = allFeeds[1].url;
+
+                    // all variables initialized, can begin tests
+
+                    done();
+
+                });
             });
-
-
-            //DONE CAN ONLY BE CALLED ONCE IN A BEFORE EACH
-            loadFeed(1,done);
 
         });
         it('loadFeed changes with entries', function() {
@@ -143,9 +154,9 @@ $(function() {
             /* TODO: Write a test that ensures when a new feed is loaded */
 
             //console.log(initialFeed);
-            Array.from(feed.children).forEach(function(record, index) {
-                expect(record.innerText === initialFeed[index]).toBe(false);
-            });
+
+                expect(prevUrl === newUrl).toBe(false);
+
         });
 
      });
