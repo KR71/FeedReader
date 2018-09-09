@@ -4,7 +4,7 @@
  * all of the tests that will be run against your application.
  */
 
-/* We're placing all of our tests within the $() function,
+/* All of the tests are within the $() function,
  * since some of these tests may require DOM elements. We want
  * to ensure they don't run until the DOM is ready.
  */
@@ -16,10 +16,7 @@ $(function() {
     describe('RSS Feeds', function() {
         /* This is our first test - it tests to make sure that the
          * allFeeds variable has been defined and that it is not
-         * empty. Experiment with this before you get started on
-         * the rest of this project. What happens when you change
-         * allFeeds in app.js to be an empty array and refresh the
-         * page?
+         * empty.
          */
         it('AllFeeds is defined', function() {
 
@@ -109,9 +106,9 @@ $(function() {
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
         it('calls back with data', function () {
-            const feed = document.querySelector('.feed .entry');
-            //console.log(feed);
-            expect(feed).toBeDefined(true);
+            const feed = document.querySelectorAll('.feed .entry');
+            //console.log(feed.length);
+            expect(feed.length).toBeGreaterThan(1);
 
         });
 
@@ -119,6 +116,7 @@ $(function() {
     /* TODO: Write a new test suite named "New Feed Selection" */
     describe('New feed selection', function() {
 
+        const feed = document.querySelectorAll('.feed');
         let prevUrl;
         let newUrl;
 
@@ -132,14 +130,15 @@ $(function() {
 
 
                  // feed 0 done loading
-               //console.log(allFeeds[0]);
-                prevUrl = allFeeds[0].url;
-
+               console.log(feed);
+                prevUrl = $('.feed').html();
+                console.log(prevUrl);
                 loadFeed(1, function(){
 
                     // feed 1 done loading
 
-                    newUrl = allFeeds[1].url;
+
+                    newUrl = $('.feed').html();
 
                     // all variables initialized, can begin tests
 
